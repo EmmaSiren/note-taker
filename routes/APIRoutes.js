@@ -1,13 +1,12 @@
-const notes = require('express').Router();
-const { readAndAppend } = require('../helpers/fsUtils');
+const api = require('express').Router();
+const { readFromFile, readAndAppend } = require('../helpers/fsUtils');
 const uuid = require('../helpers/uuid');
 
-// notes.get('/', (req, res) => {
-//   console.info(`${req.method} requrest received for notes.`);
-//   readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
-// });
+api.get('/notes', (req, res) =>
+  readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)))
+);
 
-notes.post('/', (req, res) => {
+api.post('/notes', (req, res) => {
   console.info(`${req.method} request received to add a note.`);
   console.log(req.body);
 
@@ -27,4 +26,4 @@ notes.post('/', (req, res) => {
   };
 });
 
-module.exports = notes;
+module.exports = api;
